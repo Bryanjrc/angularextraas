@@ -1,0 +1,44 @@
+<section class="teams-page" aria-labelledby="teams-title">
+    <header class="teams-header">
+        <div>
+            <p class="eyebrow">Fútbol internacional</p>
+            <h1 id="teams-title">Equipos</h1>
+            <p class="intro">Descubre los equipos que han dejado huella en la historia de la Champions League.</p>
+        </div>
+        @if (equipos) {
+        <span class="team-count">{{ equipos.length }} equipos</span>
+        }
+    </header>
+
+    @if (!equipos) {
+    <div class="status-card" role="status">Cargando equipos...</div>
+    } @else if (equipos.length === 0) {
+    <div class="status-card">No hay equipos disponibles.</div>
+    } @else {
+    <div class="teams-grid">
+        @for (equipo of equipos; track equipo.idEquipo) {
+        <article class="team-card">
+            <div class="team-image-wrapper">
+                <img class="team-image" [src]="equipo.imagen" [alt]="'Escudo del ' + equipo.nombre" />
+                @if (equipo.finalista) {
+                <span class="finalist-badge">Finalista</span>
+                }
+            </div>
+
+            <div class="team-content">
+                <h2>{{ equipo.nombre }}</h2>
+                <div class="team-stat" aria-label="Copas de Europa">
+                    <span class="trophy" aria-hidden="true">★</span>
+                    <span><strong>{{ equipo.champions }}</strong> {{ equipo.champions === 1 ? 'Champions' : 'Champions'
+                        }}</span>
+                </div>
+                <p class="team-description">{{ equipo.descripcion }}</p>
+                <a class="team-link" [href]="equipo.web" target="_blank" rel="noopener noreferrer">
+                    Visitar web oficial <span aria-hidden="true">↗</span>
+                </a>
+            </div>
+        </article>
+        }
+    </div>
+    }
+</section>
